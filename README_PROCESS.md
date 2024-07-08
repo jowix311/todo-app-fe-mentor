@@ -38,4 +38,8 @@
     - Followed command creating single Prisma Client connection
     - Created lib
   - Step 5
-   - Did not follow, just customized code to show on the index page
+    - Did not follow, just customized code to show on the index page
+  Note:
+    - It much better to place the schema.prisma at the index folder, so we do not need to pass the directory every time.
+    - Encountered an error while deploying at vercel "need to generate prisma", followed [this](https://stackoverflow.com/questions/67746885/prisma-client-did-not-initialize-yet-please-run-prisma-generate-and-try-to-i?rq=2). Fix creted was in package.json file by adding Prisma generate on npm run build
+    - Encountered error saying `pnpm` is no updated during. Fix was run pnpm install locally and pushed the `generated pnpm-lock.yaml`.
