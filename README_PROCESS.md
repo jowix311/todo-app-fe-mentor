@@ -26,7 +26,7 @@
   - Skipped to Step 2 and run command `npm i -g vercel@latest`
     - Connected database to project in vercel on website
     - Ran command `vercel env pull .env` and there was an error prompting to run `vercel link` (yes to all prompts).
-    - Re ran command `vercel env pull .env``
+    - Re ran command `vercel env pull .env`
   - Step 3
     - Ran command `npm install prisma --save-dev`
     - Followed the additional steps (creating schema/seeder)
