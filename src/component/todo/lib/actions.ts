@@ -12,3 +12,26 @@ export const addTodo = async () => {
 
   revalidatePath("/");
 };
+
+export const deleteTodo = async (id: string) => {
+  await prisma.todo.delete({
+    where: {
+      id,
+    },
+  });
+
+  revalidatePath("/");
+};
+
+export const updateCompletionStatus = async (id: string, isCompleted: boolean) => {
+  await prisma.todo.update({
+    where: {
+      id,
+    },
+    data: {
+      completed: isCompleted,
+    },
+  });
+
+  revalidatePath("/");
+};
