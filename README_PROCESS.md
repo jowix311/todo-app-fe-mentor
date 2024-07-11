@@ -17,6 +17,14 @@
 
 ## NextJS Installation
 
+- Note
+
+  - Nice to [watch](https://www.youtube.com/watch?v=QXxy8Uv1LnQ&t=2538s) crash course for NextJS and Prisma.
+  - Moved prisma folder to the root so we no need to run prisma with --schema option `npx prisma db push --schema src\prisma\schema.prisma`
+    - Moving forward on this notes you can just omit the `--schema src\prisma\schema.prisma`
+    - I am als updating the package.json build command.
+      - This line, `"generate": "npx prisma generate --schema src/prisma/schema.prisma",`
+
 - Follow this guide [here](https://nextjs.org/docs/getting-started/installation).
   - To create project on current folder just input `./` as the project name on the prompt.
 
@@ -45,5 +53,3 @@
     - Encountered an error while deploying at vercel "need to generate prisma", followed [this](https://stackoverflow.com/questions/67746885/prisma-client-did-not-initialize-yet-please-run-prisma-generate-and-try-to-i?rq=2). Fix created was in package.json file by adding Prisma generate on npm run build
     - Encountered error saying `pnpm` is no updated during. Fix was run pnpm install locally and pushed the `generated pnpm-lock.yaml`.
     - Encountered error when running `npm run dev` after a few days (2), need to run generate to fix it and importantly close an re-open vscode more on the error [here](https://github.com/prisma/studio/issues/370)
-  - Note
-    - Nice to [watch](https://www.youtube.com/watch?v=QXxy8Uv1LnQ&t=2538s) crash course for NextJS and Prisma.
