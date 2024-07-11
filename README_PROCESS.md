@@ -53,3 +53,14 @@
     - Encountered an error while deploying at vercel "need to generate prisma", followed [this](https://stackoverflow.com/questions/67746885/prisma-client-did-not-initialize-yet-please-run-prisma-generate-and-try-to-i?rq=2). Fix created was in package.json file by adding Prisma generate on npm run build
     - Encountered error saying `pnpm` is no updated during. Fix was run pnpm install locally and pushed the `generated pnpm-lock.yaml`.
     - Encountered error when running `npm run dev` after a few days (2), need to run generate to fix it and importantly close an re-open vscode more on the error [here](https://github.com/prisma/studio/issues/370)
+
+### Seeding
+
+- Read [here](https://www.prisma.io/docs/orm/prisma-migrate/workflows/seeding).
+- Created ./prsima/seed.ts
+- Added `"prisma": {
+  "seed": "ts-node prisma/seed.ts"
+},` to package.json
+- We nee to install package ts-note `npm install -D ts-node @types/node`
+- Finally run `npx prisma db seed`.
+- Note: Seed will append to database not clear it.
