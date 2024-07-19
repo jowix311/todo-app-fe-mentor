@@ -1,5 +1,9 @@
-import TodoList from "@/component/todo/todo";
+// import TodoList from "@/component/todo/todo";
+
+import { Hero } from "@/features/banner";
 import prisma from "@lib/prisma";
+import Image from "next/image";
+import IconSun from "@public/icon-sun.svg";
 
 export default async function Home() {
   // Optimized call as mention on NextJS docs
@@ -9,12 +13,23 @@ export default async function Home() {
   ]);
 
   return (
-    <main className="flex flex-col items-center justify-between p-24">
-      <h2>Active</h2>
+    <main className="min-h-screen">
+      <Hero />
+
+      <section className="px-8">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl uppercase tracking-[0.5rem] text-white">
+            Todo
+          </h1>
+
+          <Image src={IconSun} alt="icon sun" width={18} height={18} />
+        </div>
+      </section>
+      {/* <h2>Active</h2>
       <TodoList todo={activeTodo} />
 
       <h2 className="mt-6">Completed</h2>
-      <TodoList todo={completedTodo} />
+      <TodoList todo={completedTodo} /> */}
     </main>
   );
 }

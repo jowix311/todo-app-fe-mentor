@@ -20,7 +20,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={josefinSans.className}>{children}</body>
+      <body
+        className={`${josefinSans.className} bg-neutral-darkTheme-veryDarkBlue`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
