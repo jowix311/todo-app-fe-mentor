@@ -4,6 +4,7 @@ import { Hero } from "@/features/banner";
 import prisma from "@lib/prisma";
 import Image from "next/image";
 import IconSun from "@public/icon-sun.svg";
+import { TodoForm } from "@/features/todo";
 
 export default async function Home() {
   // Optimized call as mention on NextJS docs
@@ -17,12 +18,15 @@ export default async function Home() {
       <Hero />
 
       <section className="px-8">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between ">
           <h1 className="text-2xl uppercase tracking-[0.5rem] text-white">
             Todo
           </h1>
 
           <Image src={IconSun} alt="icon sun" width={18} height={18} />
+        </div>
+        <div>
+          <TodoForm/>
         </div>
       </section>
       {/* <h2>Active</h2>

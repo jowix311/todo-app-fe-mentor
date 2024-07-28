@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${josefinSans.className} bg-neutral-darkTheme-veryDarkBlue`}
+        className={`${josefinSans.className} bg-blue-700`}
       >
         {children}
       </body>
