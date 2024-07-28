@@ -5,6 +5,7 @@ import prisma from "@lib/prisma";
 import Image from "next/image";
 import IconSun from "@public/icon-sun.svg";
 import { TodoForm } from "@/features/todo";
+import { TodoItem } from "@/features/todo/todo-item.tsx";
 
 export default async function Home() {
   // Optimized call as mention on NextJS docs
@@ -27,6 +28,12 @@ export default async function Home() {
         </div>
         <div>
           <TodoForm/>
+          <TodoItem>
+          <div className="flex items-center gap-3 p-3 border-blue-600 bg-blue-600 rounded-lg">
+            <TodoItem.Indicator />
+            <TodoItem.Title />
+            </div>
+          </TodoItem>
         </div>
       </section>
       {/* <h2>Active</h2>
