@@ -1,15 +1,20 @@
 "use client";
 
-import { createContext, use, useContext, useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import clsx from "clsx";
+import { createContext, use, useContext, useEffect, useRef, useState } from "react";
+import { isContext } from "vm";
 import { create, createStore } from "zustand";
 
 // 1. Creating the Zustand store
 // Official Docs: https://github.com/pmndrs/zustand/blob/main/docs/guides/initialize-state-with-props.md
 interface TodoItemProps {
   title: string;
+  isCompleted: boolean;
 }
 interface TodoItemState extends TodoItemProps {
   setTitle: (title: string) => void;
+  toggleCompleted: () => void;
 }
 
 type TodoItemStore = ReturnType<typeof createTodoItemStore>;
@@ -18,11 +23,13 @@ const createTodoItemStore = (initProps?: Partial<TodoItemProps>) => {
   console.log("initProps", initProps);
   const DEFAULT_STATE = {
     title: "",
+    isCompleted: false,
   };
   return createStore<TodoItemState>((set) => ({
     ...DEFAULT_STATE,
     ...initProps,
     setTitle: (title) => set({ title }),
+    toggleCompleted: () => set((state) => ({ isCompleted: !state.isCompleted })),
   }));
 };
 
@@ -60,25 +67,43 @@ export const useTodoItemContext = () => {
 // 5. Using it on the parent Compound Component
 type Props = {
   children: React.ReactNode;
-  prop: {
-    title: string;
-  };
+  prop: TodoItemProps
 };
 
 export const TodoItem = ({ children, prop }: Props) => {
   // return <TodoItemProvider {...prop}>{children}</TodoItemProvider>; // Keeping this code for reference purposes.
-  return <TodoItemProvider title={prop.title}>{children}</TodoItemProvider>;
+  return <TodoItemProvider title={prop.title} isCompleted={true}>{children}</TodoItemProvider>;
 };
 
 const TodoItemIndicator = () => {
+  const toggleCompleted = useTodoItemContext().getState().toggleCompleted;
+
   return (
-    <div className="h-8 w-8 rounded-full border-[1px] border-blue-300"></div>
+    <Button className="h-8 w-8 rounded-full border-[1px] border-blue-300" onClick={toggleCompleted}>
+    </Button>
   );
 };
 
 const TodoItemTitle = () => {
   const title = useTodoItemContext().getState().title;
-  return <p className="text-white">{title}</p>;
+  const [isCompleted, setIsCompleted] = useState(useTodoItemContext().getState().isCompleted);
+
+
+  const todoItemContext = useTodoItemContext();
+
+  useEffect(() => {
+    const unSubscribe = todoItemContext.subscribe((state, prevState) => {
+      if(state.isCompleted !== prevState.isCompleted) {
+        setIsCompleted(state.isCompleted);
+      }
+    });
+
+    return unSubscribe;
+  }, [todoItemContext, isCompleted]);
+
+  return <p className={clsx("text-white", {
+    "line-through": isCompleted,
+  })}>{title}</p>;
 };
 
 TodoItem.Title = TodoItemTitle;

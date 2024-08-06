@@ -3,7 +3,11 @@
 import { TodoItem } from "./todo-item.tsx";
 
 export default function Sample() {
-  const data = [{ title: "Sleep 8 hours" }, { title: "Drink water" }, { title: "Eat well" }];
+  const data = [
+    { title: "Sleep 8 hours", isCompleted: Math.random() < 0.5 },
+    { title: "Drink water", isCompleted: Math.random() < 0.5 },
+    { title: "Eat well", isCompleted: Math.random() < 0.5 },
+  ];
 
   return (
     <>
