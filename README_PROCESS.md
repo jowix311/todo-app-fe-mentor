@@ -64,3 +64,8 @@
 - We nee to install package ts-note `npm install -D ts-node @types/node`
 - Finally run `npx prisma db seed`.
 - Note: Seed will append to database not clear it.
+
+
+### Zustand
+https://www.reddit.com/r/reactjs/comments/15p6j4f/how_can_i_make_a_percomponent_zustand_store/?rdt=60011
+https://github.com/pmndrs/zustand/blob/main/docs/guides/initialize-state-with-props.md
