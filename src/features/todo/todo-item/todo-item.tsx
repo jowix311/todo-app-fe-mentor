@@ -11,7 +11,7 @@ import Image from "next/image";
 // Official Docs: https://github.com/pmndrs/zustand/blob/main/docs/guides/initialize-state-with-props.md
 interface TodoItemProps {
   title: string;
-  isCompleted: boolean;
+  completed: boolean;
 }
 interface TodoItemState extends TodoItemProps {
   setTitle: (title: string) => void;
@@ -23,14 +23,14 @@ type TodoItemStore = ReturnType<typeof createTodoItemStore>;
 const createTodoItemStore = (initProps?: Partial<TodoItemProps>) => {
   const DEFAULT_STATE = {
     title: "",
-    isCompleted: false,
+    completed: false,
   };
   return createStore<TodoItemState>((set) => ({
     ...DEFAULT_STATE,
     ...initProps,
     setTitle: (title) => set({ title }),
     toggleCompleted: () =>
-      set((state) => ({ isCompleted: !state.isCompleted })),
+      set((state) => ({ completed: !state.completed })),
   }));
 };
 
@@ -74,7 +74,7 @@ type Props = {
 export const TodoItem = ({ children, prop }: Props) => {
   // return <TodoItemProvider {...prop}>{children}</TodoItemProvider>; // Keeping this code for reference purposes.
   return (
-    <TodoItemProvider title={prop.title} isCompleted={true}>
+    <TodoItemProvider title={prop.title} completed={true}>
       {children}
     </TodoItemProvider>
   );
@@ -82,7 +82,7 @@ export const TodoItem = ({ children, prop }: Props) => {
 
 const TodoItemIndicator = () => {
   const toggleCompleted = useTodoItemContext().getState().toggleCompleted;
-  const isCompleted = useTodoItemContext().getState().isCompleted;
+  const isCompleted = useTodoItemContext().getState().completed;
 
   return (
     <Button
@@ -111,15 +111,15 @@ const TodoItemIndicator = () => {
 const TodoItemTitle = () => {
   const title = useTodoItemContext().getState().title;
   const [isCompleted, setIsCompleted] = useState(
-    useTodoItemContext().getState().isCompleted,
+    useTodoItemContext().getState().completed,
   );
 
   const todoItemContext = useTodoItemContext();
 
   useEffect(() => {
     const unSubscribe = todoItemContext.subscribe((state, prevState) => {
-      if (state.isCompleted !== prevState.isCompleted) {
-        setIsCompleted(state.isCompleted);
+      if (state.completed !== prevState.completed) {
+        setIsCompleted(state.completed);
       }
     });
 

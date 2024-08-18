@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -13,12 +13,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import prisma from "@lib/prisma";
+import { useState } from "react";
+import { saveTodo } from "./todo-form.actions";
 
-const formSchema = z.object({
+export const formSchema = z.object({
   title: z.string(),
 });
 
 export const TodoForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -26,16 +30,18 @@ export const TodoForm = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
+    await saveTodo(data);
+    form.reset();
   };
 
   return (
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="flex items-center gap-3 p-3 border-blue-600 bg-blue-600 rounded-lg">
-            <div className="h-8 w-8 border-[1px] border-blue-300 rounded-full"></div>
+          <div className="flex items-center gap-3 rounded-lg border-blue-600 bg-blue-600 p-3">
+            <div className="h-8 w-8 rounded-full border-[1px] border-blue-300"></div>
 
             <FormField
               control={form.control}
@@ -59,3 +65,4 @@ export const TodoForm = () => {
     </div>
   );
 };
+

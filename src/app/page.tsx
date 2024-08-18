@@ -1,12 +1,9 @@
 // import TodoList from "@/component/todo/todo";
-
-
 import { Hero } from "@/features/banner";
 import prisma from "@lib/prisma";
 import Image from "next/image";
 import IconSun from "@public/icon-sun.svg";
 import { TodoForm } from "@/features/todo";
-import { TodoItem } from "@/features/todo/todo-item.tsx";
 import Sample from "@/features/todo/sample";
 
 export default async function Home() {
@@ -32,14 +29,6 @@ export default async function Home() {
         </div>
         <div>
           <TodoForm />
-          {/* {data.map((item, index) => (
-            <TodoItem key={index} prop={item}>
-              <div className="flex items-center gap-3 rounded-lg border-blue-600 bg-blue-600 p-3">
-                <TodoItem.Indicator />
-                <TodoItem.Title />
-              </div>
-            </TodoItem>
-          ))} */}
           <Sample/>
         </div>
       </section>
