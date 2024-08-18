@@ -5,11 +5,15 @@ import clsx from "clsx";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { createStore } from "zustand";
 import IconCheck from "@public/icon-check.svg";
+import IconCross from "@public/icon-cross.svg";
 import Image from "next/image";
+import { deleteTodo } from "@/features/todo/todo.actions";
+import { useRouter } from "next/navigation";
 
 // 1. Creating the Zustand store
 // Official Docs: https://github.com/pmndrs/zustand/blob/main/docs/guides/initialize-state-with-props.md
 interface TodoItemProps {
+  id: string;
   title: string;
   completed: boolean;
 }
@@ -22,6 +26,7 @@ type TodoItemStore = ReturnType<typeof createTodoItemStore>;
 
 const createTodoItemStore = (initProps?: Partial<TodoItemProps>) => {
   const DEFAULT_STATE = {
+    id: "",
     title: "",
     completed: false,
   };
@@ -29,8 +34,7 @@ const createTodoItemStore = (initProps?: Partial<TodoItemProps>) => {
     ...DEFAULT_STATE,
     ...initProps,
     setTitle: (title) => set({ title }),
-    toggleCompleted: () =>
-      set((state) => ({ completed: !state.completed })),
+    toggleCompleted: () => set((state) => ({ completed: !state.completed })),
   }));
 };
 
@@ -74,7 +78,7 @@ type Props = {
 export const TodoItem = ({ children, prop }: Props) => {
   // return <TodoItemProvider {...prop}>{children}</TodoItemProvider>; // Keeping this code for reference purposes.
   return (
-    <TodoItemProvider title={prop.title} completed={true}>
+    <TodoItemProvider {...prop} title={prop.title} completed={true}>
       {children}
     </TodoItemProvider>
   );
@@ -87,7 +91,7 @@ const TodoItemIndicator = () => {
   return (
     <Button
       className={clsx(
-        "flex items-center justify-center h-8 w-8 rounded-full border-[1px] border-blue-300",
+        "flex h-8 w-8 items-center justify-center rounded-full border-[1px] border-blue-300",
         {
           "bg-gradient-to-br from-blue-200 via-violet-400 to-violet-700":
             isCompleted,
@@ -137,5 +141,28 @@ const TodoItemTitle = () => {
   );
 };
 
+const TodoDelete = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  // TODO: add delete logic
+  const id = useTodoItemContext().getState().id;
+  const handleDelete = async () => {
+    console.log(id);
+    setIsLoading(true);
+    const deleteResponse = await deleteTodo(id);
+
+    // TODO: update styling or handle error
+    setIsLoading(false);
+    router.refresh();
+  };
+
+  return (
+    <Button className="text-white" variant="destructive" onClick={handleDelete}>
+      <Image src={IconCross} alt="icon cross" width={16} height={16} />
+    </Button>
+  );
+};
+
 TodoItem.Title = TodoItemTitle;
 TodoItem.Indicator = TodoItemIndicator;
+TodoItem.Delete = TodoDelete;
