@@ -1,15 +1,11 @@
 import Image from "next/image";
 import HeroMobileBannerDark from "@public/bg-desktop-dark.jpg";
+import { cn } from "@/lib/utils";
 
-<section className="h-[200px] bg-blue-600">
-  <p className="text-white">test!</p>
-  <p className="text-primary-brightBlue">test</p>
-</section>;
-
-export const Hero = () => {
+export const Hero = ({ className }: { className?: string }) => {
   return (
-    <section className="h-[200px] bg-red-500">
-      <div className="relative h-[12.5rem]">
+    <section className={cn("", className)}>
+      <div className="relative h-[18.75rem]">
         <Image
           src={HeroMobileBannerDark}
           alt="Hero Banner"

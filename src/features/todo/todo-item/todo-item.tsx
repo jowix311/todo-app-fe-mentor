@@ -152,7 +152,6 @@ const TodoDelete = () => {
   // TODO: add delete logic
   const id = useTodoItemContext().getState().id;
   const handleDelete = async () => {
-    console.log(id);
     setIsLoading(true);
     const deleteResponse = await deleteTodo(id);
 
@@ -162,7 +161,7 @@ const TodoDelete = () => {
   };
 
   return (
-    <Button className="text-white" variant="destructive" onClick={handleDelete}>
+    <Button className="bg-transparent hover:bg-transparent p-0 text-white" onClick={handleDelete}>
       <Image src={IconCross} alt="icon cross" width={16} height={16} />
     </Button>
   );
