@@ -65,13 +65,16 @@
 - Finally run `npx prisma db seed`.
 - Note: Seed will append to database not clear it.
 
-
 ### Zustand
-https://www.reddit.com/r/reactjs/comments/15p6j4f/how_can_i_make_a_percomponent_zustand_store/?rdt=60011
-https://github.com/pmndrs/zustand/blob/main/docs/guides/initialize-state-with-props.md
 
-
+- <https://www.reddit.com/r/reactjs/comments/15p6j4f/how_can_i_make_a_percomponent_zustand_store/?rdt=60011>
+- <https://github.com/pmndrs/zustand/blob/main/docs/guides/initialize-state-with-props.md>
 
 ### Errors
+
 - Error when using compound components and declaring "use client"
-  - Read more [here](https://help.mantine.dev/q/server-components#error-compound-components-in-server-component) 
+  - Read more [here](https://help.mantine.dev/q/server-components#error-compound-components-in-server-component)
+
+### Learnings
+
+- Learned about gradients in tailwind

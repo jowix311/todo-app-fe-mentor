@@ -9,6 +9,7 @@ import IconCross from "@public/icon-cross.svg";
 import Image from "next/image";
 import { deleteTodo } from "@/features/todo/todo.actions";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 // 1. Creating the Zustand store
 // Official Docs: https://github.com/pmndrs/zustand/blob/main/docs/guides/initialize-state-with-props.md
@@ -91,9 +92,9 @@ const TodoItemIndicator = () => {
   return (
     <Button
       className={clsx(
-        "flex h-8 w-8 items-center justify-center rounded-full border-[1px] border-blue-300",
+        "flex h-8 w-8 items-center justify-center rounded-full border-[1px] border-blue-300 p-0",
         {
-          "bg-gradient-to-br from-blue-200 via-violet-400 to-violet-700":
+          "bg-gradient-to-br from-sky-200 via-violet-300 to-violet-700":
             isCompleted,
         },
       )}
@@ -101,7 +102,7 @@ const TodoItemIndicator = () => {
     >
       {isCompleted && (
         <Image
-          className="flex"
+          className=""
           src={IconCheck}
           alt="icon check"
           width={16}
@@ -132,8 +133,8 @@ const TodoItemTitle = () => {
 
   return (
     <p
-      className={clsx("text-white", {
-        "line-through": isCompleted,
+      className={cn("text-white", {
+        "line-through text-muted-foreground": isCompleted,
       })}
     >
       {title}
