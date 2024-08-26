@@ -78,24 +78,25 @@ type Props = {
 
 export const TodoItem = ({ children, prop }: Props) => {
   // return <TodoItemProvider {...prop}>{children}</TodoItemProvider>; // Keeping this code for reference purposes.
-  return (
-    <TodoItemProvider {...prop} title={prop.title} completed={true}>
-      {children}
-    </TodoItemProvider>
-  );
+  // Keeping this code for manually assigning props to the store. Below overrides completed and title from the destructured props.
+  // return (
+  //   <TodoItemProvider {...prop} title={prop.title} completed={true}>
+  //     {children}
+  //   </TodoItemProvider>
+  // );
+  return <TodoItemProvider {...prop}>{children}</TodoItemProvider>;
 };
 
 const TodoItemIndicator = () => {
   const toggleCompleted = useTodoItemContext().getState().toggleCompleted;
   const isCompleted = useTodoItemContext().getState().completed;
-
   return (
     <Button
-      className={clsx(
-        "flex h-8 w-8 items-center justify-center rounded-full border-[1px] border-blue-300 p-0",
+      className={cn(
+        "group relative flex h-8 w-8 items-center justify-center rounded-full border-[1px] border-blue-300 from-sky-200 via-violet-300 to-violet-700 p-[1px]",
         {
-          "bg-gradient-to-br from-sky-200 via-violet-300 to-violet-700":
-            isCompleted,
+          "bg-gradient-to-br": isCompleted,
+          "hover:bg-gradient-to-br": !isCompleted,
         },
       )}
       onClick={toggleCompleted}
@@ -108,6 +109,10 @@ const TodoItemIndicator = () => {
           width={16}
           height={16}
         />
+      )}
+
+      {!isCompleted && (
+        <div className="h-full w-full rounded-full bg-blue-600"></div>
       )}
     </Button>
   );
@@ -134,14 +139,13 @@ const TodoItemTitle = () => {
   return (
     <p
       className={cn("text-white", {
-        "line-through text-muted-foreground": isCompleted,
+        "text-muted-foreground line-through": isCompleted,
       })}
     >
       {title}
     </p>
   );
 };
-
 const TodoDelete = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
