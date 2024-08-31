@@ -14,8 +14,7 @@ import { createStore } from "zustand";
 import IconCheck from "@public/icon-check.svg";
 import IconCross from "@public/icon-cross.svg";
 import Image from "next/image";
-import { deleteTodo, updateTodoStatus } from "@/features/todo/todo.actions";
-import { useRouter } from "next/navigation";
+import { deleteTodo, updateTodoStatus, deleteTodoByIds } from "@/features/todo";
 import { cn } from "@/lib/utils";
 
 // 1. Creating the Zustand store
@@ -181,17 +180,17 @@ const TodoItemTitle = () => {
 };
 const TodoDelete = () => {
   const toggleIsLoading = useTodoItemContext().getState().toggleIsLoading;
-  const router = useRouter();
+
 
   const id = useTodoItemContext().getState().id;
   const handleDelete = async () => {
     toggleIsLoading(true);
 
-    const deleteResponse = await deleteTodo(id);
+    const deleteResponse = await deleteTodo([id]);
+
+    deleteTodoByIds([id]);
 
     toggleIsLoading(false);
-
-    router.refresh();
   };
 
   return (

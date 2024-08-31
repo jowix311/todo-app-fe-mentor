@@ -9,12 +9,11 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { saveTodo } from "./todo-form.actions";
+import { saveTodo, addTodo } from "@features/todo";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
@@ -24,7 +23,6 @@ export const formSchema = z.object({
 
 export const TodoForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,10 +32,16 @@ export const TodoForm = () => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    await saveTodo(data);
+
+    const response = await saveTodo(data);
+
+    if (response !== false) {
+      addTodo(response);
+    }
+
     setIsLoading(false);
+
     form.reset();
-    router.refresh();
   };
 
   return (

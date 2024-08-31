@@ -11,9 +11,6 @@ import {
 export default async function Sample() {
   const data = await getTodoList();
 
-  // We can use this to derive state
-  useTodoListStore.setState({ todoList: data });
-
   return (
     <>
       <TodoLayout.ListBlock>

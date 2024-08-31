@@ -1,8 +1,7 @@
 "use server";
 
 import prisma from "@lib/prisma";
-import { formSchema } from "./todo-form/todo-form.component";
-import { z } from "zod";
+// import { formSchema } from "./todo-form/todo-form.component";
 
 // TODO: move server actions here
 
@@ -38,11 +37,13 @@ export const updateTodoStatus = async (id: string, isCompleted: boolean) => {
     return false;
   }
 };
-export const deleteTodo = async (id: string) => {
+export const deleteTodo = async (ids: string[]) => {
   try {
-    await prisma.todo.delete({
+    await prisma.todo.deleteMany({
       where: {
-        id: id,
+        id: {
+          in: ids,
+        },
       },
     });
     return true;
