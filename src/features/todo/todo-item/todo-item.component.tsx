@@ -14,7 +14,13 @@ import { createStore } from "zustand";
 import IconCheck from "@public/icon-check.svg";
 import IconCross from "@public/icon-cross.svg";
 import Image from "next/image";
-import { deleteTodo, updateTodoStatus, deleteTodoByIds } from "@/features/todo";
+import {
+  deleteTodo,
+  updateTodoStatus,
+  deleteTodoByIds,
+  updateTodoStoreStatus,
+  useTodoListStore,
+} from "@/features/todo";
 import { cn } from "@/lib/utils";
 
 // 1. Creating the Zustand store
@@ -26,8 +32,6 @@ interface TodoItemProps {
   isLoading?: boolean;
 }
 interface TodoItemState extends TodoItemProps {
-  setTitle: (title: string) => void;
-  toggleCompleted: () => void;
   toggleIsLoading: (isLoading: boolean) => void;
 }
 
@@ -43,8 +47,6 @@ const createTodoItemStore = (initProps?: Partial<TodoItemProps>) => {
   return createStore<TodoItemState>((set) => ({
     ...DEFAULT_STATE,
     ...initProps,
-    setTitle: (title) => set({ title }),
-    toggleCompleted: () => set((state) => ({ completed: !state.completed })),
     toggleIsLoading: (isLoading: boolean) => set({ isLoading }),
   }));
 };
@@ -113,10 +115,9 @@ const TodoItemIndicator = () => {
 
     // Update local state
     setIsCompleted(!isCompleted);
-    // Update store state
-    todoItemContext.setState({
-      completed: !isCompleted,
-    });
+
+    updateTodoStoreStatus(todoId, !isCompleted);
+
     todoItemContext.setState({
       isLoading: false,
     });
@@ -158,15 +159,18 @@ const TodoItemTitle = () => {
 
   const todoItemContext = useTodoItemContext();
 
+  // We need to subscribe to the todo list store, so we can update the state accordingly
   useEffect(() => {
-    const unSubscribe = todoItemContext.subscribe((state, prevState) => {
-      if (state.completed !== prevState.completed) {
-        setIsCompleted(state.completed);
-      }
+    const unSubscribe = useTodoListStore.subscribe((state, prevState) => {
+      const isCompleted =
+        state.todoList.find((todo) => todo.id === todoItemContext.getState().id)
+          ?.completed || false;
+
+      setIsCompleted(isCompleted);
     });
 
     return unSubscribe;
-  }, [todoItemContext, isCompleted]);
+  }, []);
 
   return (
     <p
@@ -180,7 +184,6 @@ const TodoItemTitle = () => {
 };
 const TodoDelete = () => {
   const toggleIsLoading = useTodoItemContext().getState().toggleIsLoading;
-
 
   const id = useTodoItemContext().getState().id;
   const handleDelete = async () => {
