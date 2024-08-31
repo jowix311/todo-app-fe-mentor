@@ -170,7 +170,7 @@ const TodoItemTitle = () => {
     });
 
     return unSubscribe;
-  }, []);
+  }, [todoItemContext]);
 
   return (
     <p

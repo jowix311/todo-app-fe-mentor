@@ -15,7 +15,7 @@ export const TodoList = ({ data, className }: TodoListProps) => {
 
   useEffect(() => {
     useTodoListStore.setState({ todoList: data });
-  }, []);
+  }, [data]);
 
   return (
     <div className={cn("mt-8 rounded-lg bg-blue-600", className)}>
