@@ -180,7 +180,6 @@ const TodoItemTitle = () => {
   );
 };
 const TodoDelete = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const toggleIsLoading = useTodoItemContext().getState().toggleIsLoading;
   const router = useRouter();
 
