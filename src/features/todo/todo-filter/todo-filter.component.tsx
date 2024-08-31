@@ -11,8 +11,7 @@ export const TodoFilter = ({
   url: string;
 }) => {
   const pathname = usePathname();
-  console.log(pathname, url);
-  console.log(pathname === url);
+
   return (
     <Link
       href={url}

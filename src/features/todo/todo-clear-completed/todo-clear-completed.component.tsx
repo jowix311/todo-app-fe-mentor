@@ -1,8 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { deleteTodo, useTodoListStore } from "@features/todo";
-import { useEffect } from "react";
+import { deleteTodo, deleteTodoByIds, useTodoListStore } from "@features/todo";
 
 export const TodoClearCompleted = () => {
   // We can make this component more dumb
@@ -13,6 +12,8 @@ export const TodoClearCompleted = () => {
       .map((todo) => todo.id);
 
     const response = await deleteTodo(completedTodoIds);
+
+    deleteTodoByIds(completedTodoIds);
   };
 
   return (
