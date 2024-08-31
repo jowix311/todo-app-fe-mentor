@@ -11,14 +11,13 @@ const MainContainer = ({ children }: PropsWithChildren) => {
 };
 
 export default async function Home() {
-
   return (
     <main className="min-h-screen">
       <MainContainer>
         <Hero className="absolute left-0 right-0" />
         <TodoLayout>
           <TodoLayout.Container className="pt-10">
-            <TodoLayout.UpperSection>
+            <TodoLayout.UpperSection className="mb-6">
               <TodoLayout.Header>Todo</TodoLayout.Header>
               <Image src={IconSun} alt="icon sun" width={18} height={18} />
             </TodoLayout.UpperSection>

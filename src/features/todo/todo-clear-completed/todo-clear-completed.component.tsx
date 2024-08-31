@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { deleteTodo, useTodoListStore } from "@features/todo";
+import { useEffect } from "react";
 
 export const TodoClearCompleted = () => {
   // We can make this component more dumb

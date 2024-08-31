@@ -11,11 +11,12 @@ export const TodoFilter = ({
   url: string;
 }) => {
   const pathname = usePathname();
-
+  console.log(pathname, url);
+  console.log(pathname === url);
   return (
     <Link
       href={url}
-      className={`font-medium text-muted-foreground ${pathname === url ? "text-blue-200" : ""}`}
+      className={`font-medium ${pathname === url ? "text-blue-200" : "text-muted-foreground"}`}
     >
       {label}
     </Link>

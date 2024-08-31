@@ -16,10 +16,8 @@ export const addTodo = (todo: Todo) => {
 };
 
 export const updateTodoStoreStatus = (id: string, completed: boolean) => {
-  console.log("updateTodoStoreStatus", id, completed);
   useTodoListStore.setState((state) => ({
     todoList: state.todoList.map((todo) => {
-      console.log("updateTodoStoreStatus inside", completed);
       return todo.id === id ? { ...todo, completed } : todo;
     }),
   }));
