@@ -1,7 +1,7 @@
 "use client";
 
 import { Todo } from "@prisma/client";
-import { TodoItem } from "../todo-item";
+import { TodoItem } from "@features/todo";
 import { cn } from "@/lib/utils";
 
 type TodoListProps = {

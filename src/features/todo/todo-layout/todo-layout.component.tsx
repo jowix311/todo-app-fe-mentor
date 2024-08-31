@@ -40,6 +40,14 @@ const TodoHeader = ({ children, className }: TodoHeaderProps) => {
   );
 };
 
+const TodoListBlock = ({ children, className }: ChildrenClassNameProps) => {
+  return (
+    <div className={cn("mt-8 rounded-lg bg-blue-600", className)}>
+      {children}
+    </div>
+  );
+};
+
 export const TodoLayout = ({ children }: PropsWithChildren) => {
   return <>{children}</>;
 };
@@ -47,3 +55,4 @@ export const TodoLayout = ({ children }: PropsWithChildren) => {
 TodoLayout.Container = TodoContainer;
 TodoLayout.UpperSection = TodoContainerUpperSection;
 TodoLayout.Header = TodoHeader;
+TodoLayout.ListBlock = TodoListBlock;
