@@ -29,6 +29,7 @@ interface TodoItemProps {
 interface TodoItemState extends TodoItemProps {
   setTitle: (title: string) => void;
   toggleCompleted: () => void;
+  toggleIsLoading: (isLoading: boolean) => void;
 }
 
 type TodoItemStore = ReturnType<typeof createTodoItemStore>;
@@ -45,6 +46,7 @@ const createTodoItemStore = (initProps?: Partial<TodoItemProps>) => {
     ...initProps,
     setTitle: (title) => set({ title }),
     toggleCompleted: () => set((state) => ({ completed: !state.completed })),
+    toggleIsLoading: (isLoading: boolean) => set({ isLoading }),
   }));
 };
 
@@ -179,15 +181,17 @@ const TodoItemTitle = () => {
 };
 const TodoDelete = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const toggleIsLoading = useTodoItemContext().getState().toggleIsLoading;
   const router = useRouter();
-  // TODO: add delete logic
+
   const id = useTodoItemContext().getState().id;
   const handleDelete = async () => {
-    setIsLoading(true);
+    toggleIsLoading(true);
+
     const deleteResponse = await deleteTodo(id);
 
-    // TODO: update styling or handle error
-    setIsLoading(false);
+    toggleIsLoading(false);
+
     router.refresh();
   };
 
