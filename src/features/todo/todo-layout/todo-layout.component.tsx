@@ -48,6 +48,27 @@ const TodoListBlock = ({ children, className }: ChildrenClassNameProps) => {
   );
 };
 
+const TodoListFooter = ({ children, className }: ChildrenClassNameProps) => {
+  return (
+    <div className={cn("flex justify-between bg-blue-600", className)}>
+      {children}
+    </div>
+  );
+};
+
+const TodoListFilter = ({ children, className }: ChildrenClassNameProps) => {
+  return (
+    <div
+      className={cn(
+        "flex items-center justify-center gap-3 rounded bg-blue-600 p-4",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+};
+
 export const TodoLayout = ({ children }: PropsWithChildren) => {
   return <>{children}</>;
 };
@@ -56,3 +77,5 @@ TodoLayout.Container = TodoContainer;
 TodoLayout.UpperSection = TodoContainerUpperSection;
 TodoLayout.Header = TodoHeader;
 TodoLayout.ListBlock = TodoListBlock;
+TodoLayout.ListFooter = TodoListFooter;
+TodoLayout.Filter = TodoListFilter;

@@ -5,6 +5,7 @@ import {
   TodoLayout,
   TodoCounter,
   TodoClearCompleted,
+  TodoFilter,
 } from "@features/todo";
 
 export default async function Sample() {
@@ -17,11 +18,16 @@ export default async function Sample() {
     <>
       <TodoLayout.ListBlock>
         <TodoList data={data} />
-        <div className="flex justify-between bg-blue-600">
+        <TodoLayout.ListFooter>
           <TodoCounter />
           <TodoClearCompleted />
-        </div>
+        </TodoLayout.ListFooter>
       </TodoLayout.ListBlock>
+      <TodoLayout.Filter className="mt-4">
+        <TodoFilter label="All" url="/" />
+        <TodoFilter label="Active" url="/active" />
+        <TodoFilter label="Completed" url="/completed" />
+      </TodoLayout.Filter>
     </>
   );
 }

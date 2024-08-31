@@ -5,3 +5,4 @@ export * from "./todo.actions";
 export * from "./todo-counter";
 export * from "./todo-clear-completed";
 export * from "./todo-layout";
+export * from "./todo-filter";
