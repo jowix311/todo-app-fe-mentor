@@ -22,14 +22,14 @@ import { z } from "zod";
 //   }
 // };
 
-export const updateTodoStatus = async (id: string) => {
+export const updateTodoStatus = async (id: string, isCompleted: boolean) => {
   try {
     await prisma.todo.update({
       where: {
         id: id,
       },
       data: {
-        completed: true,
+        completed: isCompleted,
       },
     });
     return true;

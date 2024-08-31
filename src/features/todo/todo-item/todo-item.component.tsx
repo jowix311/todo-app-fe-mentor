@@ -108,7 +108,7 @@ const TodoItemIndicator = () => {
       isLoading: true,
     });
 
-    const response = await updateTodoStatus(todoId);
+    const response = await updateTodoStatus(todoId, !isCompleted);
 
     // Update local state
     setIsCompleted(!isCompleted);
