@@ -2,12 +2,19 @@
 
 import { Button } from "@/components/ui/button";
 import clsx from "clsx";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { createStore } from "zustand";
 import IconCheck from "@public/icon-check.svg";
 import IconCross from "@public/icon-cross.svg";
 import Image from "next/image";
-import { deleteTodo } from "@/features/todo/todo.actions";
+import { deleteTodo, updateTodoStatus } from "@/features/todo/todo.actions";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -17,6 +24,7 @@ interface TodoItemProps {
   id: string;
   title: string;
   completed: boolean;
+  isLoading?: boolean;
 }
 interface TodoItemState extends TodoItemProps {
   setTitle: (title: string) => void;
@@ -30,6 +38,7 @@ const createTodoItemStore = (initProps?: Partial<TodoItemProps>) => {
     id: "",
     title: "",
     completed: false,
+    isLoading: false,
   };
   return createStore<TodoItemState>((set) => ({
     ...DEFAULT_STATE,
@@ -88,8 +97,30 @@ export const TodoItem = ({ children, prop }: Props) => {
 };
 
 const TodoItemIndicator = () => {
-  const toggleCompleted = useTodoItemContext().getState().toggleCompleted;
-  const isCompleted = useTodoItemContext().getState().completed;
+  const todoItemContext = useTodoItemContext();
+  const todoId = useTodoItemContext().getState().id;
+  const [isCompleted, setIsCompleted] = useState(
+    useTodoItemContext().getState().completed,
+  );
+
+  const handleClick = async () => {
+    todoItemContext.setState({
+      isLoading: true,
+    });
+
+    const response = await updateTodoStatus(todoId);
+
+    // Update local state
+    setIsCompleted(!isCompleted);
+    // Update store state
+    todoItemContext.setState({
+      completed: !isCompleted,
+    });
+    todoItemContext.setState({
+      isLoading: false,
+    });
+  };
+
   return (
     <Button
       className={cn(
@@ -99,7 +130,7 @@ const TodoItemIndicator = () => {
           "hover:bg-gradient-to-br": !isCompleted,
         },
       )}
-      onClick={toggleCompleted}
+      onClick={handleClick}
     >
       {isCompleted && (
         <Image
@@ -161,12 +192,47 @@ const TodoDelete = () => {
   };
 
   return (
-    <Button className="bg-transparent hover:bg-transparent p-0 text-white" onClick={handleDelete}>
+    <Button
+      className="bg-transparent p-0 text-white hover:bg-transparent"
+      onClick={handleDelete}
+    >
       <Image src={IconCross} alt="icon cross" width={16} height={16} />
     </Button>
+  );
+};
+
+const TodoItemBlock = ({
+  children,
+  className,
+}: PropsWithChildren & { className?: string }) => {
+  const [isLoading, setIsLoading] = useState(
+    useTodoItemContext().getState().isLoading,
+  );
+
+  const todoItemContext = useTodoItemContext();
+
+  useEffect(() => {
+    const unsubscribe = todoItemContext.subscribe((state) =>
+      setIsLoading(state.isLoading),
+    );
+
+    return unsubscribe;
+  }, [todoItemContext]);
+  return (
+    <div
+      className={cn(
+        "group flex items-center gap-3 border-b-[1px] border-b-muted-foreground p-3",
+        {
+          "pointer-events-none opacity-50": isLoading,
+        },
+      )}
+    >
+      {children}
+    </div>
   );
 };
 
 TodoItem.Title = TodoItemTitle;
 TodoItem.Indicator = TodoItemIndicator;
 TodoItem.Delete = TodoDelete;
+TodoItem.Block = TodoItemBlock;
