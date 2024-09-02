@@ -1,10 +1,9 @@
 import { Hero } from "@/features/banner";
-import Image from "next/image";
-import IconSun from "@public/icon-sun.svg";
 import { TodoForm } from "@/features/todo";
 import Sample from "@/features/todo/sample";
 import { PropsWithChildren } from "react";
 import { TodoLayout } from "@/features/todo/todo-layout/todo-layout.component";
+import { ThemeSwitcher } from "@/features/theme";
 
 const MainContainer = ({ children }: PropsWithChildren) => {
   return <section className="relative">{children}</section>;
@@ -19,7 +18,7 @@ export default async function Home() {
           <TodoLayout.Container className="pt-10">
             <TodoLayout.UpperSection className="mb-6">
               <TodoLayout.Header>Todo</TodoLayout.Header>
-              <Image src={IconSun} alt="icon sun" width={18} height={18} />
+              <ThemeSwitcher />
             </TodoLayout.UpperSection>
             <div>
               <TodoForm />
