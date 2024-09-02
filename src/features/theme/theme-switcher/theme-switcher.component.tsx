@@ -10,7 +10,7 @@ const ICON_SIZE = 18;
 
 // Followed ShadCN guide
 export const ThemeSwitcher = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme = "dark", setTheme } = useTheme();
 
   const isDark = theme === "dark";
   const oppositeTheme = isDark ? "light" : "dark";
