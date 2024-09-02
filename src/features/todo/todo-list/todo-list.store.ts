@@ -1,13 +1,14 @@
 import { Todo } from "@prisma/client";
 import { create } from "zustand";
+import { subscribeWithSelector } from 'zustand/middleware'
 
 interface TodoListState {
   todoList: Todo[];
 }
 
-export const useTodoListStore = create<TodoListState>((set) => ({
+export const useTodoListStore = create<TodoListState>()(subscribeWithSelector((set) => ({
   todoList: [],
-}));
+})));
 
 export const addTodo = (todo: Todo) => {
   useTodoListStore.setState((state) => ({
