@@ -1,15 +1,25 @@
 import { Hero } from "@/features/banner";
 import { TodoForm } from "@/features/todo";
-import Sample from "@/features/todo/sample";
+// import Sample from "@/features/todo/sample"; // keeping for reference
 import { PropsWithChildren } from "react";
-import { TodoLayout } from "@/features/todo/todo-layout/todo-layout.component";
 import { ThemeSwitcher } from "@/features/theme";
+import {
+  useTodoListStore,
+  TodoList,
+  getTodoList,
+  TodoLayout,
+  TodoCounter,
+  TodoClearCompleted,
+  TodoFilter,
+} from "@/features/todo";
 
 const MainContainer = ({ children }: PropsWithChildren) => {
   return <section className="relative">{children}</section>;
 };
 
 export default async function Home() {
+  const data = await getTodoList();
+
   return (
     <main className="min-h-screen dark:bg-blue-700">
       <MainContainer>
@@ -23,7 +33,23 @@ export default async function Home() {
             <div>
               <TodoForm />
               {/* TODO create more appropriate meaning */}
-              <Sample />
+              <TodoLayout.ListBlock>
+                <TodoList data={data} />
+                <TodoLayout.ListFooter className="items-center">
+                  <TodoCounter />
+                  <TodoLayout.Filter className="hidden gap-2 border-0 lg:flex">
+                    <TodoFilter label="All" url="/" />
+                    <TodoFilter label="Active" url="/active" />
+                    <TodoFilter label="Completed" url="/completed" />
+                  </TodoLayout.Filter>
+                  <TodoClearCompleted />
+                </TodoLayout.ListFooter>
+              </TodoLayout.ListBlock>
+              <TodoLayout.Filter className="mt-4 lg:hidden">
+                <TodoFilter label="All" url="/" />
+                <TodoFilter label="Active" url="/active" />
+                <TodoFilter label="Completed" url="/completed" />
+              </TodoLayout.Filter>
             </div>
           </TodoLayout.Container>
         </TodoLayout>
