@@ -12,8 +12,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { saveTodo, addTodo } from "@features/todo";
+import { use, useState } from "react";
+import { saveTodo, addTodo, useTodoListStore } from "@features/todo";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
@@ -23,6 +23,7 @@ export const formSchema = z.object({
 
 export const TodoForm = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const todoCount = useTodoListStore((state) => state.todoList).length;
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,7 +51,7 @@ export const TodoForm = () => {
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className={cn("space-y-8", {
-            "pointer-events-none opacity-85": isLoading,
+            "pointer-events-none opacity-85": isLoading || todoCount === 10,
           })}
         >
           <div className="flex items-center gap-3 rounded-lg border-blue-600 bg-white p-3 dark:bg-blue-600">
@@ -66,6 +67,7 @@ export const TodoForm = () => {
                       placeholder="Add a Todo"
                       {...field}
                       className="border-0 bg-white text-blue-300 dark:border-blue-600 dark:bg-blue-600"
+                      disabled={todoCount === 10}
                     />
                   </FormControl>
                   <FormMessage />
@@ -75,6 +77,11 @@ export const TodoForm = () => {
           </div>
         </form>
       </Form>
+      {todoCount >= 10 && (
+        <p className="text-sm text-red-500">
+          You can only add 10 items for now 😀
+        </p>
+      )}
     </div>
   );
 };
