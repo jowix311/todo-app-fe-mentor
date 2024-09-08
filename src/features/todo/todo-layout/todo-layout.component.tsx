@@ -8,7 +8,7 @@ type ChildrenClassNameProps = PropsWithChildren & {
 type TodoContainerProps = ChildrenClassNameProps;
 const TodoContainer = ({ children, className }: TodoContainerProps) => {
   return (
-    <section className={cn("relative z-20 px-8", className)}>
+    <section className={cn("relative z-20 px-8 lg:max-w-[1024px] m-auto", className)}>
       {children}
     </section>
   );
@@ -42,7 +42,12 @@ const TodoHeader = ({ children, className }: TodoHeaderProps) => {
 
 const TodoListBlock = ({ children, className }: ChildrenClassNameProps) => {
   return (
-    <div className={cn("mt-8 rounded-lg bg-blue-600", className)}>
+    <div
+      className={cn(
+        "mt-8 rounded-lg border-[1px] border-gray-200 dark:border-0 dark:bg-blue-600",
+        className,
+      )}
+    >
       {children}
     </div>
   );
@@ -50,7 +55,12 @@ const TodoListBlock = ({ children, className }: ChildrenClassNameProps) => {
 
 const TodoListFooter = ({ children, className }: ChildrenClassNameProps) => {
   return (
-    <div className={cn("flex justify-between bg-blue-600", className)}>
+    <div
+      className={cn(
+        "flex justify-between rounded-lg dark:bg-blue-600",
+        className,
+      )}
+    >
       {children}
     </div>
   );
@@ -60,7 +70,7 @@ const TodoListFilter = ({ children, className }: ChildrenClassNameProps) => {
   return (
     <div
       className={cn(
-        "flex items-center justify-center gap-3 rounded bg-blue-600 p-4",
+        "flex items-center justify-center gap-3 rounded border-[1px] border-gray-200 p-4 dark:border-0 dark:bg-blue-600",
         className,
       )}
     >

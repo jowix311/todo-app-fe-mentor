@@ -15,7 +15,7 @@ export const TodoFilter = ({
   return (
     <Link
       href={url}
-      className={`font-medium ${pathname === url ? "text-blue-200" : "text-muted-foreground"}`}
+      className={`font-medium ${pathname === url ? "text-blue-800 dark:text-blue-200" : "text-muted-foreground"}`}
     >
       {label}
     </Link>

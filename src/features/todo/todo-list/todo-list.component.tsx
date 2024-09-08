@@ -18,7 +18,7 @@ export const TodoList = ({ data, className }: TodoListProps) => {
   }, [data]);
 
   return (
-    <div className={cn("mt-8 rounded-lg bg-blue-600", className)}>
+    <div className={cn("rounded-lg bg-white dark:bg-blue-600", className)}>
       {todoList.map((item, index) => (
         <TodoItem prop={item} key={index}>
           <TodoItem.Block>

@@ -11,7 +11,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
 
 export default async function Home() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen dark:bg-blue-700">
       <MainContainer>
         <Hero className="absolute left-0 right-0" />
         <TodoLayout>

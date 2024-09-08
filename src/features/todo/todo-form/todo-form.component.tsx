@@ -53,7 +53,7 @@ export const TodoForm = () => {
             "pointer-events-none opacity-85": isLoading,
           })}
         >
-          <div className="flex items-center gap-3 rounded-lg border-blue-600 bg-blue-600 p-3">
+          <div className="flex items-center gap-3 rounded-lg border-blue-600 bg-white p-3 dark:bg-blue-600">
             <div className="h-8 w-8 rounded-full border-[1px] border-blue-300"></div>
 
             <FormField
@@ -65,7 +65,7 @@ export const TodoForm = () => {
                     <Input
                       placeholder="Add a Todo"
                       {...field}
-                      className="border-blue-600 bg-blue-600 text-blue-300"
+                      className="border-0 bg-white text-blue-300 dark:border-blue-600 dark:bg-blue-600"
                     />
                   </FormControl>
                   <FormMessage />

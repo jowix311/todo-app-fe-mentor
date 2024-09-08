@@ -19,14 +19,14 @@ export default function TodoList({ todo }: TodoProps) {
           <div className="flex gap-2">
             <button
               type="button"
-              className="text-white"
+              className="text-black dark:text-white"
               onClick={() => updateCompletionStatus(id, true)}
             >
               Mark as Complete
             </button>
             <button
               type="button"
-              className="text-white"
+              className="text-black dark:text-white"
               onClick={() => deleteTodo(id)}
             >
               Delete

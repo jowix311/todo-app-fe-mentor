@@ -15,12 +15,17 @@ export default async function Sample() {
     <>
       <TodoLayout.ListBlock>
         <TodoList data={data} />
-        <TodoLayout.ListFooter>
+        <TodoLayout.ListFooter className="items-center">
           <TodoCounter />
+          <TodoLayout.Filter className="hidden gap-2 border-0 lg:flex">
+            <TodoFilter label="All" url="/" />
+            <TodoFilter label="Active" url="/active" />
+            <TodoFilter label="Completed" url="/completed" />
+          </TodoLayout.Filter>
           <TodoClearCompleted />
         </TodoLayout.ListFooter>
       </TodoLayout.ListBlock>
-      <TodoLayout.Filter className="mt-4">
+      <TodoLayout.Filter className="mt-4 lg:hidden">
         <TodoFilter label="All" url="/" />
         <TodoFilter label="Active" url="/active" />
         <TodoFilter label="Completed" url="/completed" />

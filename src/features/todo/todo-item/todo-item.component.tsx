@@ -126,7 +126,7 @@ const TodoItemIndicator = () => {
   return (
     <Button
       className={cn(
-        "group relative flex h-8 w-8 items-center justify-center rounded-full border-[1px] border-blue-300 from-sky-200 via-violet-300 to-violet-700 p-[1px]",
+        "group relative flex h-8 w-8 items-center justify-center rounded-full border-[1px] border-gray-200 bg-white from-sky-200 via-violet-300 to-violet-700 p-[1px] dark:border-blue-300",
         {
           "bg-gradient-to-br": isCompleted,
           "hover:bg-gradient-to-br": !isCompleted,
@@ -145,7 +145,7 @@ const TodoItemIndicator = () => {
       )}
 
       {!isCompleted && (
-        <div className="h-full w-full rounded-full bg-blue-600"></div>
+        <div className="h-full w-full rounded-full bg-white dark:bg-blue-600"></div>
       )}
     </Button>
   );
@@ -174,7 +174,7 @@ const TodoItemTitle = () => {
 
   return (
     <p
-      className={cn("text-white", {
+      className={cn("dark:text-white", {
         "text-muted-foreground line-through": isCompleted,
       })}
     >
@@ -226,7 +226,7 @@ const TodoItemBlock = ({
   return (
     <div
       className={cn(
-        "group flex items-center gap-3 border-b-[1px] border-b-muted-foreground p-3",
+        "group flex items-center gap-3 border-b-[1px] border-gray-200 p-3 dark:border-muted-foreground",
         {
           "pointer-events-none opacity-50": isLoading,
         },

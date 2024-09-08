@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${josefinSans.className} bg-blue-700`}>
+      <body className={`${josefinSans.className}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

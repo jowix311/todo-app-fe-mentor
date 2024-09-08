@@ -18,7 +18,7 @@ export const TodoClearCompleted = () => {
 
   return (
     <Button
-      className="bg-transparent text-muted-foreground hover:bg-transparent hover:text-white"
+      className="bg-transparent text-muted-foreground hover:bg-transparent dark:hover:text-white"
       onClick={handleClick}
     >
       Clear Completed
