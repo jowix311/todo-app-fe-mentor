@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const TodoFilter = ({
   label,
@@ -10,14 +10,19 @@ export const TodoFilter = ({
   label: string;
   url: string;
 }) => {
-  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handleClick = () => {
+    router.push(`?status=${url}`);
+  };
 
   return (
-    <Link
-      href={url}
-      className={`font-medium ${pathname === url ? "text-blue-800 dark:text-blue-200" : "text-muted-foreground"}`}
+    <Button
+      className={`bg-transparent font-medium hover:bg-transparent ${searchParams.get("status") === url ? "text-blue-800 dark:text-blue-200" : "text-muted-foreground"}`}
+      onClick={handleClick}
     >
       {label}
-    </Link>
+    </Button>
   );
 };
