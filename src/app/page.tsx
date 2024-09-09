@@ -13,12 +13,18 @@ import {
   TodoFilter,
 } from "@/features/todo";
 
+// TODO Revisit caching issue
+export const revalidate = 0;
+
 const MainContainer = ({ children }: PropsWithChildren) => {
   return <section className="relative">{children}</section>;
 };
 
 export default async function Home() {
   const data = await getTodoList();
+
+  // TODO remove log
+  console.log("MAIN Data source", data);
 
   return (
     <main className="min-h-screen dark:bg-blue-700">

@@ -3,24 +3,64 @@
 import { Todo } from "@prisma/client";
 import { TodoItem, useTodoListStore } from "@features/todo";
 import { cn } from "@/lib/utils";
-import { use, useEffect } from "react";
+import { use, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+
+enum STATUS {
+  all = "",
+  active = "active",
+  completed = "completed",
+}
+
+const filteredTodoList = (todoList: Todo[], currentStatusFilter: STATUS) => {
+  switch (currentStatusFilter) {
+    case STATUS.active:
+      return todoList.filter((todo) => !todo.completed);
+    case STATUS.completed:
+      return todoList.filter((todo) => todo.completed);
+    default:
+      return todoList;
+  }
+};
 
 type TodoListProps = {
   data: Todo[];
   className?: string;
 };
 
+// TODO Revisit caching issue
+
 export const TodoList = ({ data, className }: TodoListProps) => {
-  const todoList = useTodoListStore((state) => state.todoList);
+  const searchParams = useSearchParams();
+  const currentStatusFilter = searchParams.get("status") as STATUS | null;
+  // const todoListed = useTodoListStore((state) => state.todoList);
+  const [finalFilteredTodo, setFinalFilteredTodo] = useState<Todo[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
+    // TODO remove log
+    console.log("THE data", data);
     useTodoListStore.setState({ todoList: data });
-  }, [data]);
+  }, [data, searchParams, router]);
+
+  useEffect(() => {
+    const unsSub = useTodoListStore.subscribe(
+      (state) => state.todoList,
+      (state) => {
+        setFinalFilteredTodo(
+          filteredTodoList(state, currentStatusFilter || STATUS.all),
+        );
+      },
+      { fireImmediately: true },
+    );
+    return unsSub;
+  }, [currentStatusFilter]);
 
   return (
     <div className={cn("rounded-lg bg-white dark:bg-blue-600", className)}>
-      {todoList.map((item, index) => (
-        <TodoItem prop={item} key={index}>
+      {finalFilteredTodo.map((item, index) => (
+        // The key here is SUPER important DO NO use index or else list will not render properly
+        <TodoItem prop={item} key={`${item.id}_${Math.random()}`}>
           <TodoItem.Block>
             <TodoItem.Indicator />
             <TodoItem.Title />
