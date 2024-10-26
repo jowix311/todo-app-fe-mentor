@@ -38,8 +38,6 @@ export const TodoList = ({ data, className }: TodoListProps) => {
   const router = useRouter();
 
   useEffect(() => {
-    // TODO remove log
-    console.log("THE data", data);
     useTodoListStore.setState({ todoList: data });
   }, [data, searchParams, router]);
 

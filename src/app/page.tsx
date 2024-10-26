@@ -23,9 +23,6 @@ const MainContainer = ({ children }: PropsWithChildren) => {
 export default async function Home() {
   const data = await getTodoList();
 
-  // TODO remove log
-  console.log("MAIN Data source", data);
-
   return (
     <main className="min-h-screen dark:bg-blue-700">
       <MainContainer>
